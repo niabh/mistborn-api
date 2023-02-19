@@ -8,6 +8,9 @@ WORKDIR /usr/src/app
 COPY package*.json /.
 RUN npm install
 
+# SETUP ORM
+RUN npx prisma db pull
+
 # If you are building your code for production
 # RUN npm ci --only=production
 
