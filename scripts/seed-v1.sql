@@ -29,7 +29,7 @@ CREATE TABLE Ashmounts (
 );
 
 DROP TABLE IF EXISTS Body_Waters;
-CREATE TABLE BodyWaters (
+CREATE TABLE Body_Waters (
     id INT PRIMARY KEY,
     dominance_id INT,
     name varchar(255) NOT NULL,
@@ -61,7 +61,7 @@ CREATE TABLE Character_Alias (
     id INT PRIMARY KEY,
     character_id INT,
     alias varchar(255),
-    FOREIGN KEY (character_id) REFERENCES Character(id)
+    FOREIGN KEY (character_id) REFERENCES Characters(id)
 );
 
 DROP TABLE IF EXISTS Character_Appareances;
@@ -69,8 +69,8 @@ CREATE TABLE Character_Appareances (
     id INT PRIMARY KEY,
     character_id INT,
     book_id INT,
-    FOREIGN KEY (character_id) REFERENCES Character(id),
-    FOREIGN KEY (book_id) REFERENCES Book(id)
+    FOREIGN KEY (character_id) REFERENCES Characters(id),
+    FOREIGN KEY (book_id) REFERENCES Books(id)
 );
 
 -- Quotes
@@ -80,8 +80,8 @@ CREATE TABLE Quotes (
     character_id INT,
     book_id INT,
     description TEXT,
-    FOREIGN KEY (character_id) REFERENCES Character(id),
-    FOREIGN KEY (book_id) REFERENCES Book(id)
+    FOREIGN KEY (character_id) REFERENCES Characters(id),
+    FOREIGN KEY (book_id) REFERENCES Books(id)
 );
 
 -- Magic systems

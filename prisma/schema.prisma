@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -8,4 +5,97 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+model ashmounts {
+  id           Int         @id
+  dominance_id Int?
+  name         String      @db.VarChar(255)
+  dominances   dominances? @relation(fields: [dominance_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model body_waters {
+  id           Int         @id
+  dominance_id Int?
+  name         String      @db.VarChar(255)
+  dominances   dominances? @relation(fields: [dominance_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model books {
+  id                    Int                     @id
+  name                  String                  @db.VarChar(255)
+  isbn                  String?                 @db.VarChar(255)
+  pages                 Int?
+  publisher             String?                 @db.VarChar(255)
+  country               String?                 @db.VarChar(255)
+  released              String?                 @db.VarChar(255)
+  character_appareances character_appareances[]
+  quotes                quotes[]
+}
+
+model character_alias {
+  id           Int         @id
+  character_id Int?
+  alias        String?     @db.VarChar(255)
+  characters   characters? @relation(fields: [character_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model character_appareances {
+  id           Int         @id
+  character_id Int?
+  book_id      Int?
+  books        books?      @relation(fields: [book_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  characters   characters? @relation(fields: [character_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model characters {
+  id                    Int                     @id
+  name                  String                  @db.VarChar(255)
+  gender                String?                 @db.VarChar(255)
+  race_id               Int?
+  abilities             String?                 @db.VarChar(255)
+  born                  Int?
+  character_alias       character_alias[]
+  character_appareances character_appareances[]
+  dominances            dominances?             @relation(fields: [born], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  races                 races?                  @relation(fields: [race_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  quotes                quotes[]
+}
+
+model dominances {
+  id          Int           @id
+  name        String        @db.VarChar(255)
+  ashmounts   ashmounts[]
+  body_waters body_waters[]
+  characters  characters[]
+}
+
+model magic_systems {
+  id     Int      @id
+  name   String   @db.VarChar(255)
+  metals metals[]
+}
+
+model metals {
+  id              Int            @id
+  magic_system_id Int?
+  name            String?        @db.VarChar(255)
+  description     String?
+  magic_systems   magic_systems? @relation(fields: [magic_system_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model quotes {
+  id           Int         @id
+  character_id Int?
+  book_id      Int?
+  description  String?
+  books        books?      @relation(fields: [book_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  characters   characters? @relation(fields: [character_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model races {
+  id         Int          @id
+  name       String       @db.VarChar(255)
+  origin     String?      @db.VarChar(255)
+  characters characters[]
 }
