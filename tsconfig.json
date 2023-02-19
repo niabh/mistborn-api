@@ -3,9 +3,12 @@
         "sourceMap": true,
         "outDir": "build",
         "strict": true,
+        "noImplicitAny": true,
+        "resolveJsonModule": true,
         "lib": [
             "esnext"
         ],
+        "module": "commonjs",
         "esModuleInterop": true
     },
     "include": [
